@@ -5,18 +5,21 @@ import { COLORS } from '../../constants';
 import Icon from '../Icon';
 import { getDisplayedValue } from './Select.helpers';
 
-const Select = ({ label, value, onChange, children }) => {
+const SelectNative = ({ label, value, onChange, children }) => {
   const displayedValue = getDisplayedValue(value, children);
 
   return (
   <Wrapper>
-    <TheSelect value={value} onChange={onChange} style={{"--width": displayedValue.length + "ch"}}>
+    <TheSelect value={value} onChange={onChange} style={{
+      "--width": displayedValue.length + "ch",
+      "--space-width": (displayedValue.length - 2) + "px"
+      }}>
       {children}
     </TheSelect>
-    <MySelect>
+    {/* <MySelect>
       {displayedValue}
-      <I id='chevron-down' size={24} strokeWidth={2}></I>
-    </MySelect>
+    </MySelect> */}
+    <I id='chevron-down' size={24} strokeWidth={2}></I>
   </Wrapper>
   );
 };
@@ -26,34 +29,33 @@ const Wrapper = styled.div`
   /* width: calc(var(--width) + 68px); */
   width: max-content;
   border-radius: 8px;
+  color: ${COLORS.gray700};
   /* overflow: hidden; */
 `
 
 const TheSelect = styled.select`
-  position: absolute;
-  top:0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
+  appearance: none;
+  padding: 12px 16px;
+  padding-right: 52px;
+  border:none;
+  border-radius: 8px;
+  /* position: absolute; */
+  /* top:0; */
+  /* left: 0; */
+   /* height: 100%; */
+    width: calc(var(--width) + var(--space-width) + 68px); 
+  /* opacity: 0; */
   /* padding-right: 52px; */
+  color: ${COLORS.gray700};
+  background-color: ${COLORS.transparentGray15};
+
+  &:hover {
+    color: ${COLORS.  black};
+  }
 `
 
 const MySelect = styled.div`
 /* position: absolute; */
-  padding: 12px 16px;
-  color: ${COLORS.gray700};
-  background-color: ${COLORS.transparentGray15};
-  border-radius: 8px;
-  padding-right: 52px;
-
-  ${TheSelect}:hover + &{
-    color: ${COLORS.black};
-  }
-  ${TheSelect}:focus + & {
-    outline: 1px dotted black;
-    outline: 5px auto -webkit-focus-ring-color;
-  }
 `
 
 
@@ -65,10 +67,13 @@ const I = styled(Icon)`
   margin:auto;
   height: ${props => props.size + "px"};
   width: ${props => props.size + "px"};
-  /* color: inherit; */
+  color: inherit;
   pointer-events: none;
+ ${TheSelect}:hover + &  {
+  color: ${COLORS.black};
+} 
 `
 
 
 
-export default Select;
+export default SelectNative;

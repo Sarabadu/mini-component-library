@@ -1,0 +1,26 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import SelectNative from './SelectNative';
+
+<Meta title="SelectNative" component={SelectNative} />
+
+# SelectNative
+
+export const ManagedSelect = () => {
+  const [value, setValue] = React.useState('newest');
+  return (
+    <SelectNative
+      label="Sort"
+      value={value}
+      onChange={(ev) => setValue(ev.target.value)}
+    >
+      <option value="newest">Newest Releases</option>
+      <option value="Really long selected option!">Really long selected option!</option>
+      <option value="curated">Curated</option>
+      <option value="00000">00000</option>
+    </SelectNative>
+  );
+};
+
+<Story name="Default">
+  <ManagedSelect />
+</Story>
