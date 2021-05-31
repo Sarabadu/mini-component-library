@@ -9,18 +9,16 @@ import VisuallyHidden from '../VisuallyHidden';
 
 const STYLES = {
   small:{
-    fontSize: 0.875,
-    strokeWidth: 0.5,
+    fontSize: 14,
+    height: 24,
+    strokeWidth: 1,
     iconSize: 16,
-    leftPadding: 10,
-    blockPadding:6,
   },
   large:{
-    fontSize: 1.125,
+    fontSize: 18,
+    height: 36,
     strokeWidth: 2,
     iconSize: 24,
-    leftPadding: 14,
-    blockPadding:9,
   }
 
 }
@@ -43,43 +41,24 @@ const IconInput = ({
 
   const style = STYLES[size];
 
-  return <Wrapper style={{"--width":width + "px"}}>
+  return <Wrapper >
     <VisuallyHidden>{label}</VisuallyHidden>
         <I size={style.iconSize} id={icon} strokeWidth={style.strokeWidth} style={{"--blockPadding":style.blockPadding +'px'}}/>
         <Input 
           type="text" placeholder={placeholder}  
           style={{
-              "--fontSize":style.fontSize + 'rem',
-              "--iconSize":style.iconSize + 'px',
-              "--leftPadding": style.leftPadding + 'px',
-              "--blockPadding":style.blockPadding +'px'
+              "--fontSize": (style.fontSize / 16) + 'rem',
+              "--height":style.height +'px',
+              "--strokeWidth":style.strokeWidth +'px',
+              "--width":width + "px"
                }}/>
-        <Line style={{
-          "--strokeWidth":style.strokeWidth + 'px' 
-        }}/>
       </Wrapper>;
 };
 
-const Line = styled.div`
-  position: absolute;
-  content: " ";
-  display: block;
-  border-radius: 1px;
-  background-color: black;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  height: var(--strokeWidth);
-
-  /* width: 100%; */
-
-`
-
-const Wrapper = styled.div`
+const Wrapper = styled.label`
   position: relative;
-  width: var(--width);
   color: ${COLORS.gray700};
-  /* overflow: hidden; */
+  overflow: hidden;
   &:hover{
     color: ${COLORS.black}
   }
@@ -87,25 +66,25 @@ const Wrapper = styled.div`
 
 const I = styled(Icon)`
   position: absolute;
-  top:var(--blockPadding);
-  bottom: 8px;
+  top:0;
+  bottom: 0px;
   left: 2px;
+  height: ${props => props.size + 'px'};
+  margin: auto 0;
   color: inherit;
   pointer-events: none;
 `
 
 const Input = styled.input`
-/* position: absolute; */
-  padding-top: var(--blockPadding);
-  padding-bottom: var(--blockPadding);
-  padding-left: calc( var(--iconSize) + var(--leftPadding));
+  padding-left: var(--height);
   border: 0px solid transparent;
-  /* border-bottom: 2px groove ${COLORS.black}; */
-  font-size: var(--fontSize);
+  height: var(--height);
+  border-bottom: var(--strokeWidth) solid ${COLORS.black}; 
+  font-size: var(--fontSize)  ;
   font-weight: 700;
-  border-radius: 2px;
-  width: 100%;
+  width: var(--width);
   color: inherit;
+  outline-offset: 2px;
 
   top: 0;
   bottom: 0;
